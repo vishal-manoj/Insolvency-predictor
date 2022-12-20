@@ -65,6 +65,7 @@ class Ui:
 
         self.submit_button_frame = Frame(self.display_frame, height=70, width=1230, highlightbackground='#31f1f7',
                                          highlightthickness=4)
+
         self.submit_button_frame.place(x=0, y=665)
         self.submit_button = Button(self.submit_button_frame, text='Submit Data', height=3, width=30, bg='#31f1f7')
         self.submit_button.place(x=500, y=3)
@@ -147,14 +148,14 @@ class Ui:
                       self.inventory_entry, self.current_liability_entry, self.cash_equivalents_entry,
                       self.cash_flow_entry, self.operating_cashflow_entry]
 
-        label_y = 20
+        label_y = 10
         for label in label_list:
             label.place(x=5, y=label_y)
-            label_y += 50
-        entry_y = 20
+            label_y += 29
+        entry_y = 10
         for entry in entry_list:
             entry.place(x=400, y=entry_y)
-            entry_y += 50
+            entry_y += 29
 
 
 obj = Tk()
