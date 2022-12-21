@@ -7,8 +7,10 @@ class Ui:
         self.year_label = None
         self.no_shares_label = None
         self.rfo_label = None
+        self.credit_sales_label = None
         self.oi_label = None
         self.depreciation_amortization_label = None
+        self.cost_of_goods_label = None
         self.operating_exp_label = None
         self.finance_cost_label = None
         self.tax_amount_label = None
@@ -30,8 +32,10 @@ class Ui:
         self.year_entry = None
         self.no_shares_entry = None
         self.rfo_entry = None
+        self.credit_sales_entry = None
         self.oi_entry = None
         self.depreciation_amortization_entry = None
+        self.cost_of_goods_entry = None
         self.operating_exp_entry = None
         self.finance_cost_entry = None
         self.tax_amount_entry = None
@@ -86,9 +90,11 @@ class Ui:
         self.year_label = Label(self.data_entry_frame, text='Year:', font=size)
         self.no_shares_label = Label(self.data_entry_frame, text='Number of shares:', font=size)
         self.rfo_label = Label(self.data_entry_frame, text='Revenue From Operations:', font=size)
+        self.credit_sales_label = Label(self.data_entry_frame, text='Credit Sales:', font=size)
         self.oi_label = Label(self.data_entry_frame, text='Other Income:', font=size)
         self.depreciation_amortization_label = Label(self.data_entry_frame, text='Depreciation and Amortization:',
                                                      font=size)
+        self.cost_of_goods_label = Label(self.data_entry_frame, text='Cost of goods sold:', font=size)
         self.operating_exp_label = Label(self.data_entry_frame, text='Operating Expenses:', font=size)
         self.finance_cost_label = Label(self.data_entry_frame, text='Finance Cost:', font=size)
         self.tax_amount_label = Label(self.data_entry_frame, text='Tax Amount:', font=size)
@@ -96,8 +102,8 @@ class Ui:
         self.contingent_liability_label = Label(self.data_entry_frame, text='Contingent Liabilities:', font=size)
         self.total_asset_label = Label(self.data_entry_frame, text='Total Asset:', font=size)
         self.retained_earnings_label = Label(self.data_entry_frame, text='Retained earnings:', font=size)
-        self.equity_capital_label = Label(self.data_entry_frame, text='Total Asset:', font=size)
-        self.long_term_debt_label = Label(self.data_entry_frame, text='Total Asset:', font=size)
+        self.equity_capital_label = Label(self.data_entry_frame, text='Equity Capital:', font=size)
+        self.long_term_debt_label = Label(self.data_entry_frame, text='Long Term Debt :', font=size)
         self.current_asset_label = Label(self.data_entry_frame, text='Current Asset:', font=size)
         self.marketable_securities_label = Label(self.data_entry_frame, text='Marketable Securities:', font=size)
         self.trade_receivables_label = Label(self.data_entry_frame, text='Trade Receivables:', font=size)
@@ -113,8 +119,10 @@ class Ui:
         self.year_entry = Entry(self.data_entry_frame, width=width)
         self.no_shares_entry = Entry(self.data_entry_frame, width=width)
         self.rfo_entry = Entry(self.data_entry_frame, width=width)
+        self.credit_sales_entry = Entry(self.data_entry_frame, width=width)
         self.oi_entry = Entry(self.data_entry_frame, width=width)
         self.depreciation_amortization_entry = Entry(self.data_entry_frame, width=width)
+        self.cost_of_goods_entry = Entry(self.data_entry_frame, width=width)
         self.operating_exp_entry = Entry(self.data_entry_frame, width=width)
         self.finance_cost_entry = Entry(self.data_entry_frame, width=width)
         self.tax_amount_entry = Entry(self.data_entry_frame, width=width)
@@ -132,16 +140,18 @@ class Ui:
         self.cash_equivalents_entry = Entry(self.data_entry_frame, width=width)
         self.cash_flow_entry = Entry(self.data_entry_frame, width=width)
         self.operating_cashflow_entry = Entry(self.data_entry_frame, width=width)
-        label_list = [self.company_name_label, self.year_label, self.no_shares_label, self.rfo_label, self.oi_label,
-                      self.depreciation_amortization_label, self.operating_exp_label, self.finance_cost_label,
+        label_list = [self.company_name_label, self.year_label, self.no_shares_label, self.rfo_label,
+                      self.credit_sales_label, self.oi_label, self.depreciation_amortization_label,
+                      self.cost_of_goods_label, self.operating_exp_label, self.finance_cost_label,
                       self.tax_amount_label, self.contingent_liability_label, self.total_asset_label,
                       self.retained_earnings_label, self.equity_capital_label, self.long_term_debt_label,
                       self.current_asset_label, self.marketable_securities_label, self.trade_receivables_label,
                       self.inventory_label, self.current_liability_label, self.cash_equivalents_label,
                       self.cash_flow_label, self.operating_cashflow_label]
 
-        entry_list = [self.company_name_entry, self.year_entry, self.no_shares_entry, self.rfo_entry, self.oi_entry,
-                      self.depreciation_amortization_entry, self.operating_exp_entry, self.finance_cost_entry,
+        entry_list = [self.company_name_entry, self.year_entry, self.no_shares_entry, self.rfo_entry,
+                      self.credit_sales_entry, self.oi_entry, self.depreciation_amortization_entry,
+                      self.cost_of_goods_entry, self.operating_exp_entry, self.finance_cost_entry,
                       self.tax_amount_entry, self.contingent_liability_entry, self.total_asset_entry,
                       self.retained_earnings_entry, self.equity_capital_entry, self.long_term_debt_entry,
                       self.current_asset_entry, self.marketable_securities_entry, self.trade_receivables_entry,
@@ -151,11 +161,11 @@ class Ui:
         label_y = 10
         for label in label_list:
             label.place(x=5, y=label_y)
-            label_y += 29
+            label_y += 27
         entry_y = 10
         for entry in entry_list:
             entry.place(x=400, y=entry_y)
-            entry_y += 29
+            entry_y += 27
 
 
 obj = Tk()
