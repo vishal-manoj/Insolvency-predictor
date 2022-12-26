@@ -40,5 +40,29 @@ class FinancialData:
         self.revenue_per_share = self.revenue_from_operations/self.no_of_shares
         self.operating_profit_per_share = self.operating_income/self.no_of_shares
         self.pretax_income_per_share = self.pbt/self.no_of_shares
+        self.current_ratio = self.current_asset/self.current_liability
+        self.quick_ratio = (self.cash_cash_equivalents + self.marketable_securities +
+                            self.trade_receivables)/self.current_liability
+        self.interest_expense_ratio = self.finance_cost/(self.revenue_from_operations + self.other_income)
+        self.networth_asset_ratio = self.equity_capital/self.total_asset
+        self.long_term_fund_suitability = (self.long_term_debt + self.equity_capital)/(self.total_asset -
+                                                                                       self.current_asset)
+        self.contingent_liability_networth = self.contingent_liability/self.equity_capital
+        self.inventory_receivables_equity = (self.inventory + self.trade_receivables)/self.equity_capital
+        self.asset_turnover_ratio = self.revenue_from_operations/self.total_asset
+        self.trade_receivables_turnover = self.credit_sales/self.trade_receivables
+        self.avg_collection_days = self.trade_receivables_turnover/365
+        self.inventory_turnover = self.cost_goods_sold/self.inventory
+        self.working_capital_total_asset_ratio = (self.current_asset - self.current_liability)/self.total_asset
+        self.quick_asset_total_asset_ratio = (self.cash_cash_equivalents + self.marketable_securities +
+                                              self.trade_receivables)/self.total_asset
+        self.current_asset_total_asset_ratio = self.current_asset/self.total_asset
+        self.cash_asset_total_asset_ratio = self.cash_cash_equivalents/self.total_asset
+        self.cash_current_liability_ratio = self.cash_cash_equivalents/self.current_liability
+        self.inventory_working_capital_ratio = self.inventory/(self.current_asset + self.current_liability)
+        self.inventory_current_liability_ratio = self.inventory/self.current_liability
+        self.working_capital_equity_ratio = (self.current_asset + self.current_liability)/self.equity_capital
+        self.current_liability_equity_ratio = self.current_liability/self.equity_capital
+        self.retained_earnings_total_asset = self.retained_earnings/self.total_asset
         
 
