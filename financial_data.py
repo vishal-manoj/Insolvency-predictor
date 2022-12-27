@@ -24,12 +24,14 @@ class FinancialData:
         self.cash_cash_equivalents = kwargs.get('cac')
         self.cash_flow = kwargs.get('cf')
         self.operating_cash_flow = kwargs.get('ocf')
+        self.net_income_flag = kwargs.get('net_income_flag')
         self.gross_profit = self.revenue_from_operations-self.cost_goods_sold
         self.total_income = self.revenue_from_operations + self.other_income
         self.total_expense = self.cost_goods_sold + self.operating_expenses + self.finance_cost + self.tax_amount
         self.net_profit = self.total_income - self.total_expense
         self.operating_income = self.total_income - (self.cost_goods_sold + self.operating_expenses)
         self.pbt = self.revenue_from_operations - (self.cost_goods_sold + self.operating_expenses + self.finance_cost)
+        self.ebit = self.total_income - (self.cost_goods_sold + self.operating_expenses)
 
         self.gp_margin = self.gross_profit/self.revenue_from_operations
         self.operating_profit_ratio = self.operating_income/self.revenue_from_operations
@@ -64,5 +66,19 @@ class FinancialData:
         self.working_capital_equity_ratio = (self.current_asset + self.current_liability)/self.equity_capital
         self.current_liability_equity_ratio = self.current_liability/self.equity_capital
         self.retained_earnings_total_asset = self.retained_earnings/self.total_asset
-        
+        self.total_income_exp_ratio = self.total_income/self.total_expense
+        self.total_exp_asset_ratio = self.total_expense/self.total_asset
+        self.current_asset_turnover = self.current_asset/self.revenue_from_operations
+        self.quick_asset_turnover = (self.cash_cash_equivalents + self.marketable_securities +
+                                     self.trade_receivables)/self.revenue_from_operations
+        self.working_capital_turnover = (self.current_asset - self.current_liability)/self.revenue_from_operations
+        self.cash_turnover = self.cash_cash_equivalents/self.revenue_from_operations
+        self.cashflow_sales_ratio = self.cash_flow/self.revenue_from_operations
+        self.cashflow_asset_ratio = self.cash_flow/self.total_asset
+        self.cfo_asset_ratio = self.operating_cash_flow/self.total_asset
+        self.cashflow_equity_ratio = self.cash_flow/self.equity_capital
+        self.net_income_total_asset_ratio = self.net_profit/self.total_asset
+        self.interest_coverage_ratio = self.finance_cost/self.ebit
+
+
 

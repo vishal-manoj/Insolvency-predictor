@@ -27,6 +27,7 @@ class Ui:
         self.cash_equivalents_label = None
         self.cash_flow_label = None
         self.operating_cashflow_label = None
+        self.net_income_flag_label = None
 
         self.company_name_entry = None
         self.year_entry = None
@@ -52,6 +53,9 @@ class Ui:
         self.cash_equivalents_entry = None
         self.cash_flow_entry = None
         self.operating_cashflow_entry = None
+        self.selected_option = None
+        self.option_values = None
+        self.net_income_flag_option = None
         self.root = root
         self.root.title('Insolvency Predictor')
         self.root.state('zoomed')
@@ -113,6 +117,9 @@ class Ui:
 
         self.cash_flow_label = Label(self.data_entry_frame, text='Cash Flow:', font=size)
         self.operating_cashflow_label = Label(self.data_entry_frame, text='Operating Cash Flow:', font=size)
+        self.net_income_flag_label = Label(self.data_entry_frame,
+                                           text='Negative net income for last two consecutive years:',
+                                           font=size)
 
         width = 50
         self.company_name_entry = Entry(self.data_entry_frame, width=width)
@@ -140,6 +147,9 @@ class Ui:
         self.cash_equivalents_entry = Entry(self.data_entry_frame, width=width)
         self.cash_flow_entry = Entry(self.data_entry_frame, width=width)
         self.operating_cashflow_entry = Entry(self.data_entry_frame, width=width)
+        self.selected_option = StringVar()
+        self.option_values = ['Yes', 'No']
+        self.net_income_flag_option = OptionMenu(self.data_entry_frame, self.selected_option, *self.option_values)
         label_list = [self.company_name_label, self.year_label, self.no_shares_label, self.rfo_label,
                       self.credit_sales_label, self.oi_label, self.depreciation_amortization_label,
                       self.cost_of_goods_label, self.operating_exp_label, self.finance_cost_label,
@@ -147,7 +157,7 @@ class Ui:
                       self.retained_earnings_label, self.equity_capital_label, self.long_term_debt_label,
                       self.current_asset_label, self.marketable_securities_label, self.trade_receivables_label,
                       self.inventory_label, self.current_liability_label, self.cash_equivalents_label,
-                      self.cash_flow_label, self.operating_cashflow_label]
+                      self.cash_flow_label, self.operating_cashflow_label, self.net_income_flag_label]
 
         entry_list = [self.company_name_entry, self.year_entry, self.no_shares_entry, self.rfo_entry,
                       self.credit_sales_entry, self.oi_entry, self.depreciation_amortization_entry,
@@ -156,16 +166,16 @@ class Ui:
                       self.retained_earnings_entry, self.equity_capital_entry, self.long_term_debt_entry,
                       self.current_asset_entry, self.marketable_securities_entry, self.trade_receivables_entry,
                       self.inventory_entry, self.current_liability_entry, self.cash_equivalents_entry,
-                      self.cash_flow_entry, self.operating_cashflow_entry]
+                      self.cash_flow_entry, self.operating_cashflow_entry, self.net_income_flag_option]
 
         label_y = 10
         for label in label_list:
             label.place(x=5, y=label_y)
-            label_y += 27
+            label_y += 25
         entry_y = 10
         for entry in entry_list:
             entry.place(x=400, y=entry_y)
-            entry_y += 27
+            entry_y += 25
 
 
 obj = Tk()
