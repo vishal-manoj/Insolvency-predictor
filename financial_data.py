@@ -25,6 +25,8 @@ class FinancialData:
         self.cash_flow = kwargs.get('cf')
         self.operating_cash_flow = kwargs.get('ocf')
         self.net_income_flag = kwargs.get('net_income_flag')
+        self.insolvency_prediction = None
+        self.insolvency_report = None
         self.gross_profit = self.revenue_from_operations-self.cost_goods_sold
         self.total_income = self.revenue_from_operations + self.other_income
         self.total_expense = self.cost_goods_sold + self.operating_expenses + self.finance_cost + self.tax_amount
@@ -79,6 +81,33 @@ class FinancialData:
         self.cashflow_equity_ratio = self.cash_flow/self.equity_capital
         self.net_income_total_asset_ratio = self.net_profit/self.total_asset
         self.interest_coverage_ratio = self.finance_cost/self.ebit
+
+    def prediction_model(self):
+        pass
+
+    def generate_report(self):
+        if self.insolvency_prediction == 0:
+            self.insolvency_report = f''' 
+                        On the basis of the financial data of {self.company_name} for the year {self.year}, 
+                        it has been predicted that the company will not become insolvent. The prediction has been made
+                        on the basis of the machine learning model # model name to be included.
+                
+                        Details of the machine Learning model:
+                        # details to be included
+                        '''
+
+        if self.insolvency_prediction == 1:
+            self.insolvency_report = f''' 
+                        On the basis of the financial data of {self.company_name} for the year {self.year}, 
+                        it has been predicted that the company will become insolvent. The prediction has been made
+                        on the basis of the machine learning model # model name to be included.
+
+                        Details of the machine Learning model:
+                        # details to be included
+                        '''
+
+    def save_report(self):
+        pass
 
 
 
