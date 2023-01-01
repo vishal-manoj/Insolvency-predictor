@@ -1,3 +1,6 @@
+from fpdf import FPDF
+
+
 class FinancialData:
     def __init__(self, **kwargs):
         self.company_name = kwargs.get('name')
@@ -25,8 +28,10 @@ class FinancialData:
         self.cash_flow = kwargs.get('cf')
         self.operating_cash_flow = kwargs.get('ocf')
         self.net_income_flag = kwargs.get('net_income_flag')
+        self.path = kwargs.get('path')
         self.insolvency_prediction = None
         self.insolvency_report = None
+        self.pdf_report = None
         self.gross_profit = self.revenue_from_operations-self.cost_goods_sold
         self.total_income = self.revenue_from_operations + self.other_income
         self.total_expense = self.cost_goods_sold + self.operating_expenses + self.finance_cost + self.tax_amount
@@ -107,7 +112,14 @@ class FinancialData:
                         '''
 
     def save_report(self):
-        pass
+        self.pdf_report = FPDF()
+        self.pdf_report.add_page()
+        self.pdf_report.set_font('Arial', 'BU', 14)
+        self.pdf_report.cell(40, 10, f'Insolvency Prediction Report of {self.company_name}', 'c')
+        self.pdf_report.multi_cell(0, 10, self.insolvency_report)
+        self.pdf_report.output(self.path)
+
+
 
 
 
