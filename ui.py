@@ -79,7 +79,8 @@ class Ui:
         self.submit_button.place(x=500, y=3)
         self.data_button = Button(self.button_frame, text='Enter Data', height=3, width=40, bg='#31f1f7',
                                   command=self.data_space)
-        self.report_button = Button(self.button_frame, text='Show Insolvency Report', height=3, width=40, bg='#31f1f7')
+        self.report_button = Button(self.button_frame, text='Show Insolvency Report', height=3, width=40, bg='#31f1f7',
+                                    command=self.show_insolvency_report)
         self.save_report_button = Button(self.button_frame, text='Save Report', height=3, width=40, bg='#31f1f7')
         self.clear_button = Button(self.button_frame, text='Clear Data', height=3, width=40, bg='#31f1f7')
         button_list = [self.data_button, self.report_button, self.save_report_button, self.clear_button]
@@ -176,6 +177,10 @@ class Ui:
         for entry in entry_list:
             entry.place(x=400, y=entry_y)
             entry_y += 25
+
+    def show_insolvency_report(self):
+        for widget in self.display_frame.winfo_children():
+            widget.destroy()
 
 
 obj = Tk()
