@@ -1,4 +1,3 @@
-from fpdf import FPDF
 import pandas as pd
 import joblib
 
@@ -16,7 +15,7 @@ class FinancialData:
         self.depreciation_amortization = kwargs.get('da')
         self.finance_cost = kwargs.get('fc')
         self.tax_amount = kwargs.get('tax')
-        self.contingent_liability = kwargs.get('ca')
+        self.contingent_liability = kwargs.get('cl')
         self.total_asset = kwargs.get('total_asset')
         self.retained_earnings = kwargs.get('re')
         self.equity_capital = kwargs.get('equity')
@@ -30,7 +29,6 @@ class FinancialData:
         self.cash_flow = kwargs.get('cf')
         self.operating_cash_flow = kwargs.get('ocf')
         self.net_income_flag = kwargs.get('net_income_flag')
-        self.path = kwargs.get('path')
         self.insolvency_prediction = None
         self.insolvency_report = None
         self.pdf_report = None
@@ -120,7 +118,7 @@ class FinancialData:
                         ' Net Income to Total Assets',
                         ' Interest Coverage Ratio (Interest expense to EBIT)',
                         ' Net Income Flag']
-        self.column_data = [self.gp_margin, self.operating_profit_ratio, self.operating_exp_ratio, self.cash_flow_rate,
+        self.column_data = [[self.gp_margin, self.operating_profit_ratio, self.operating_exp_ratio, self.cash_flow_rate,
                             self.debt_equity_ratio, self.cash_flow_per_share, self.revenue_per_share,
                             self.operating_profit_per_share, self.pretax_income_per_share, self.current_ratio,
                             self.quick_ratio, self.interest_expense_ratio, self.networth_asset_ratio,
@@ -136,9 +134,9 @@ class FinancialData:
                             self.quick_asset_turnover, self.working_capital_turnover, self.cash_turnover,
                             self.cashflow_sales_ratio, self.cashflow_asset_ratio, self.cfo_asset_ratio,
                             self.cashflow_equity_ratio, self.net_income_total_asset_ratio, self.interest_coverage_ratio,
-                            self.net_income_flag]
+                            self.net_income_flag]]
         self.data = pd.DataFrame(columns=self.columns, data=self.column_data)
-        self.model = joblib.load('insolvency_prediction_model.pkl')
+        self.model = joblib.load("C:\\Users\\DELL\\insolvency_prediction_model.pkl")
         self.insolvency_prediction = self.model.predict(self.data)
 
     def generate_report(self):
@@ -181,16 +179,3 @@ class FinancialData:
                         False Negative: 45 \n
                         True Negative: 6 \n
                         '''
-
-    def save_report(self):
-        self.pdf_report = FPDF()
-        self.pdf_report.add_page()
-        self.pdf_report.set_font('Arial', 'BU', 14)
-        self.pdf_report.cell(40, 10, f'Insolvency Prediction Report of {self.company_name}', 'c')
-        self.pdf_report.multi_cell(0, 10, self.insolvency_report)
-        self.pdf_report.output(self.path)
-
-
-
-
-

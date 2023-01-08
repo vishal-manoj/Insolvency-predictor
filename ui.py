@@ -1,4 +1,5 @@
 from tkinter import *
+from financial_data import FinancialData
 
 
 class Ui:
@@ -28,6 +29,7 @@ class Ui:
         self.cash_flow_label = None
         self.operating_cashflow_label = None
         self.net_income_flag_label = None
+        self.company_data = None
 
         self.company_name_entry = None
         self.year_entry = None
@@ -55,7 +57,11 @@ class Ui:
         self.operating_cashflow_entry = None
         self.selected_option = None
         self.option_values = None
-        self.net_income_flag_option = None
+        self.net_income_flag_radio1 = None
+        self.net_income_flag_radio2 = None
+        self.report = None
+        self.report_label = None
+        self.heading_label = None
         self.root = root
         self.root.title('Insolvency Predictor')
         self.root.state('zoomed')
@@ -75,7 +81,8 @@ class Ui:
                                          highlightthickness=4)
 
         self.submit_button_frame.place(x=0, y=665)
-        self.submit_button = Button(self.submit_button_frame, text='Submit Data', height=3, width=30, bg='#31f1f7')
+        self.submit_button = Button(self.submit_button_frame, text='Submit Data', height=3, width=30, bg='#31f1f7',
+                                    command=self.submit)
         self.submit_button.place(x=500, y=3)
         self.data_button = Button(self.button_frame, text='Enter Data', height=3, width=40, bg='#31f1f7',
                                   command=self.data_space)
@@ -148,9 +155,13 @@ class Ui:
         self.cash_equivalents_entry = Entry(self.data_entry_frame, width=width)
         self.cash_flow_entry = Entry(self.data_entry_frame, width=width)
         self.operating_cashflow_entry = Entry(self.data_entry_frame, width=width)
-        self.selected_option = StringVar()
-        self.option_values = ['Yes', 'No']
-        self.net_income_flag_option = OptionMenu(self.data_entry_frame, self.selected_option, *self.option_values)
+        self.selected_option = IntVar()
+        self.net_income_flag_radio1 = Radiobutton(self.data_entry_frame, text='No', variable=self.selected_option,
+                                                  value=0)
+        self.net_income_flag_radio1.place(x=400, y=615)
+        self.net_income_flag_radio2 = Radiobutton(self.data_entry_frame, text='Yes', variable=self.selected_option,
+                                                  value=1)
+        self.net_income_flag_radio2.place(x=500, y=615)
         label_list = [self.company_name_label, self.year_label, self.no_shares_label, self.rfo_label,
                       self.credit_sales_label, self.oi_label, self.depreciation_amortization_label,
                       self.cost_of_goods_label, self.operating_exp_label, self.finance_cost_label,
@@ -167,7 +178,7 @@ class Ui:
                       self.retained_earnings_entry, self.equity_capital_entry, self.long_term_debt_entry,
                       self.current_asset_entry, self.marketable_securities_entry, self.trade_receivables_entry,
                       self.inventory_entry, self.current_liability_entry, self.cash_equivalents_entry,
-                      self.cash_flow_entry, self.operating_cashflow_entry, self.net_income_flag_option]
+                      self.cash_flow_entry, self.operating_cashflow_entry]
 
         label_y = 10
         for label in label_list:
@@ -178,9 +189,39 @@ class Ui:
             entry.place(x=400, y=entry_y)
             entry_y += 25
 
+    def submit(self):
+        self.company_data = FinancialData(name=self.company_name_entry.get(), year=self.year_entry.get(),
+                                          no_of_shares=int(self.no_shares_entry.get()), rfo=int(self.rfo_entry.get()),
+                                          credit_sales=int(self.credit_sales_entry.get()), oi=int(self.oi_entry.get()),
+                                          cgs=int(self.cost_of_goods_entry.get()),
+                                          oex=int(self.operating_exp_entry.get()),
+                                          da=int(self.depreciation_amortization_entry.get()),
+                                          fc=int(self.finance_cost_entry.get()), tax=int(self.tax_amount_entry.get()),
+                                          cl=int(self.contingent_liability_entry.get()),
+                                          total_asset=int(self.total_asset_entry.get()),
+                                          re=int(self.retained_earnings_entry.get()),
+                                          equity=int(self.equity_capital_entry.get()),
+                                          ltd=int(self.long_term_debt_entry.get()),
+                                          current_asset=int(self.current_asset_entry.get()),
+                                          securities=int(self.marketable_securities_entry.get()),
+                                          tr=int(self.trade_receivables_entry.get()),
+                                          inventory=int(self.inventory_entry.get()),
+                                          current_liability=int(self.current_liability_entry.get()),
+                                          cac=int(self.cash_equivalents_entry.get()),
+                                          cf=int(self.cash_flow_entry.get()),
+                                          ocf=int(self.operating_cashflow_entry.get()),
+                                          net_income_flag=int(self.selected_option.get()))
+
     def show_insolvency_report(self):
         for widget in self.display_frame.winfo_children():
             widget.destroy()
+        self.company_data.prediction_model()
+        self.company_data.generate_report()
+        self.report = self.company_data.insolvency_report
+        self.heading_label = Label(self.display_frame, text=self.company_data.company_name, font=('Arial', 16))
+        self.heading_label.place(x=20, y=5)
+        self.report_label = Label(self.display_frame, text=self.report, font=('Arial', 12))
+        self.report_label.place(x=1, y=10)
 
 
 obj = Tk()
