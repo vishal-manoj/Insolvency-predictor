@@ -30,6 +30,7 @@ class Ui:
         self.operating_cashflow_label = None
         self.net_income_flag_label = None
         self.company_data = None
+        self.submit_label = None
 
         self.company_name_entry = None
         self.year_entry = None
@@ -60,8 +61,7 @@ class Ui:
         self.net_income_flag_radio1 = None
         self.net_income_flag_radio2 = None
         self.report = None
-        self.report_label = None
-        self.heading_label = None
+        self.report_text = None
         self.root = root
         self.root.title('Insolvency Predictor')
         self.root.state('zoomed')
@@ -95,8 +95,12 @@ class Ui:
         for button in button_list:
             button.place(x=1, y=button_y)
             button_y += 100
+        self.enter_data_label = Label(self.display_frame, text='Click On Enter Data Button to Enter Financial Data',
+                                      font=('Arial', 16))
+        self.enter_data_label.place(x=400, y=250)
 
     def data_space(self):
+        self.enter_data_label.destroy()
         size = ('Arial', 12)
         self.company_name_label = Label(self.data_entry_frame, text='Company Name:', font=size)
         self.year_label = Label(self.data_entry_frame, text='Year:', font=size)
@@ -211,6 +215,10 @@ class Ui:
                                           cf=int(self.cash_flow_entry.get()),
                                           ocf=int(self.operating_cashflow_entry.get()),
                                           net_income_flag=int(self.selected_option.get()))
+        for widget in self.display_frame.winfo_children():
+            widget.destroy()
+        self.submit_label = Label(self.display_frame, text='Data  Successfully Submitted', font=('Arial', 18))
+        self.submit_label.place(x=400, y=250)
 
     def show_insolvency_report(self):
         for widget in self.display_frame.winfo_children():
@@ -218,10 +226,9 @@ class Ui:
         self.company_data.prediction_model()
         self.company_data.generate_report()
         self.report = self.company_data.insolvency_report
-        self.heading_label = Label(self.display_frame, text=self.company_data.company_name, font=('Arial', 16))
-        self.heading_label.place(x=20, y=5)
-        self.report_label = Label(self.display_frame, text=self.report, font=('Arial', 12))
-        self.report_label.place(x=1, y=10)
+        self.report_text = Text(self.display_frame, font=('Arial', 12), height=40, width=136)
+        self.report_text.insert(INSERT, self.company_data.insolvency_report)
+        self.report_text.place(x=0, y=0)
 
 
 obj = Tk()

@@ -142,40 +142,46 @@ class FinancialData:
     def generate_report(self):
         if self.insolvency_prediction == 0:
             self.insolvency_report = f''' 
-                        On the basis of the financial data of {self.company_name} for the year {self.year}, \n 
-                        it has been predicted that the company will not become insolvent. The prediction has been made\n
-                        on the basis of the machine learning model Random Forest Classifier. \n
+                                            INSOLVENCY REPORT OF {self.company_name}
+                                  
+                                  
+             On the basis of the financial data of {self.company_name} for the year {self.year},
+             it has been predicted that the company will not become insolvent. The prediction has been made
+             on the basis of the machine learning model Random Forest Classifier.\n
                 
-                        Details of the machine Learning model:\n
-                        For predicting whether the company will become insolvent or not Machine Learning model named \n
-                        Random Forest Classifier has been used. The model has been trained on 43 ratios of 6819 \n
-                        companies. \n
+             Details of the machine Learning model:\n
+             For predicting whether the company will become insolvent or not Machine Learning model named 
+             Random Forest Classifier has been used. The model has been trained on 43 ratios of 6819
+             companies.
                         
-                        Source of data for training Machine Learning model: Kaggle
+             Source of data for training Machine Learning model: Kaggle
                         
-                        Accuracy of Model: 0.97 \n
-                        True Positives: 1312 \n
-                        False Positives: 1 \n
-                        False Negative: 45 \n
-                        True Negative: 6 \n
-                        '''
+             Accuracy of Model: 0.97\n
+             True Positives: 1312\n
+             False Positives: 1\n
+             False Negative: 45\n
+             True Negative: 6\n
+             '''
 
         if self.insolvency_prediction == 1:
             self.insolvency_report = f''' 
-                        On the basis of the financial data of {self.company_name} for the year {self.year}, \n
-                        it has been predicted that the company will become insolvent. The prediction has been made \n
-                        on the basis of the machine learning model Random Forest Classifier. \n
+                                            INSOLVENCY REPORT OF {self.company_name}
+                                 
+                                 
+            On the basis of the financial data of {self.company_name} for the year {self.year}, 
+            it has been predicted that the company will become insolvent. The prediction has been made 
+            on the basis of the machine learning model Random Forest Classifier.\n
 
-                        Details of the machine Learning model:\n
-                        For predicting whether the company will become insolvent or not Machine Learning model named \n
-                        Random Forest Classifier has been used. The model has been trained on 43 ratios of 6819 \n
-                        companies. \n
+            Details of the machine Learning model:\n
+            For predicting whether the company will become insolvent or not Machine Learning model named
+            Random Forest Classifier has been used. The model has been trained on 43 ratios of 6819
+            companies.\n
                         
-                        Source of data for training Machine Learning model: Kaggle \n
+            Source of data for training Machine Learning model: Kaggle
                         
-                        Accuracy of Model: 0.97 \n
-                        True Positives: 1312 \n
-                        False Positives: 1 \n
-                        False Negative: 45 \n
-                        True Negative: 6 \n
-                        '''
+            Accuracy of Model: 0.97\n
+            True Positives: 1312\n
+            False Positives: 1\n
+            False Negative: 45\n
+            True Negative: 6\n
+            '''
