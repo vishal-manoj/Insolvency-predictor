@@ -1,5 +1,6 @@
 from tkinter import *
-from financial_data import FinancialData
+from financial_data import FinancialData, ReportGenerator
+from tkinter import filedialog
 
 
 class Ui:
@@ -62,6 +63,9 @@ class Ui:
         self.net_income_flag_radio2 = None
         self.report = None
         self.report_text = None
+        self.path = None
+        self.pdf_report = None
+
         self.root = root
         self.root.title('Insolvency Predictor')
         self.root.state('zoomed')
@@ -88,7 +92,9 @@ class Ui:
                                   command=self.data_space)
         self.report_button = Button(self.button_frame, text='Show Insolvency Report', height=3, width=40, bg='#31f1f7',
                                     command=self.show_insolvency_report)
-        self.save_report_button = Button(self.button_frame, text='Save Report', height=3, width=40, bg='#31f1f7')
+        self.save_report_button = Button(self.button_frame, text='Save Report', height=3, width=40, bg='#31f1f7',
+                                         state=DISABLED, command=self.save_report)
+
         self.clear_button = Button(self.button_frame, text='Clear Data', height=3, width=40, bg='#31f1f7')
         button_list = [self.data_button, self.report_button, self.save_report_button, self.clear_button]
         button_y = 2
@@ -229,6 +235,13 @@ class Ui:
         self.report_text = Text(self.display_frame, font=('Arial', 12), height=40, width=136)
         self.report_text.insert(INSERT, self.company_data.insolvency_report)
         self.report_text.place(x=0, y=0)
+        self.save_report_button['state'] = NORMAL
+
+    def save_report(self):
+        self.path = filedialog.askdirectory(title='Select Location')
+        self.pdf_report = ReportGenerator(path=self.path, report_data=self.company_data.insolvency_report,
+                                          company=self.company_data.company_name)
+        self.pdf_report.save()
 
 
 obj = Tk()

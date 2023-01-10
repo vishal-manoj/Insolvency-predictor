@@ -1,4 +1,7 @@
+import os.path
+
 import pandas as pd
+from fpdf import FPDF
 import joblib
 
 
@@ -44,53 +47,57 @@ class FinancialData:
         self.pbt = self.revenue_from_operations - (self.cost_goods_sold + self.operating_expenses + self.finance_cost)
         self.ebit = self.total_income - (self.cost_goods_sold + self.operating_expenses)
 
-        self.gp_margin = self.gross_profit/self.revenue_from_operations
-        self.operating_profit_ratio = self.operating_income/self.revenue_from_operations
-        self.operating_exp_ratio = self.operating_income/self.revenue_from_operations
-        self.cash_flow_rate = self.operating_cash_flow/self.current_liability
-        self.debt_equity_ratio = self.long_term_debt/self.equity_capital
-        self.cash_flow_per_share = self.cash_flow/self.no_of_shares
-        self.revenue_per_share = self.revenue_from_operations/self.no_of_shares
-        self.operating_profit_per_share = self.operating_income/self.no_of_shares
-        self.pretax_income_per_share = self.pbt/self.no_of_shares
-        self.current_ratio = self.current_asset/self.current_liability
-        self.quick_ratio = (self.cash_cash_equivalents + self.marketable_securities +
-                            self.trade_receivables)/self.current_liability
-        self.interest_expense_ratio = self.finance_cost/(self.revenue_from_operations + self.other_income)
-        self.networth_asset_ratio = self.equity_capital/self.total_asset
-        self.long_term_fund_suitability = (self.long_term_debt + self.equity_capital)/(self.total_asset -
-                                                                                       self.current_asset)
-        self.contingent_liability_networth = self.contingent_liability/self.equity_capital
-        self.inventory_receivables_equity = (self.inventory + self.trade_receivables)/self.equity_capital
-        self.asset_turnover_ratio = self.revenue_from_operations/self.total_asset
-        self.trade_receivables_turnover = self.credit_sales/self.trade_receivables
-        self.avg_collection_days = self.trade_receivables_turnover/365
-        self.inventory_turnover = self.cost_goods_sold/self.inventory
-        self.working_capital_total_asset_ratio = (self.current_asset - self.current_liability)/self.total_asset
-        self.quick_asset_total_asset_ratio = (self.cash_cash_equivalents + self.marketable_securities +
-                                              self.trade_receivables)/self.total_asset
-        self.current_asset_total_asset_ratio = self.current_asset/self.total_asset
-        self.cash_asset_total_asset_ratio = self.cash_cash_equivalents/self.total_asset
-        self.cash_current_liability_ratio = self.cash_cash_equivalents/self.current_liability
-        self.inventory_working_capital_ratio = self.inventory/(self.current_asset + self.current_liability)
-        self.inventory_current_liability_ratio = self.inventory/self.current_liability
-        self.working_capital_equity_ratio = (self.current_asset + self.current_liability)/self.equity_capital
-        self.current_liability_equity_ratio = self.current_liability/self.equity_capital
-        self.retained_earnings_total_asset = self.retained_earnings/self.total_asset
-        self.total_income_exp_ratio = self.total_income/self.total_expense
-        self.total_exp_asset_ratio = self.total_expense/self.total_asset
-        self.current_asset_turnover = self.current_asset/self.revenue_from_operations
-        self.quick_asset_turnover = (self.cash_cash_equivalents + self.marketable_securities +
-                                     self.trade_receivables)/self.revenue_from_operations
-        self.working_capital_turnover = (self.current_asset - self.current_liability)/self.revenue_from_operations
-        self.cash_turnover = self.cash_cash_equivalents/self.revenue_from_operations
-        self.cashflow_sales_ratio = self.cash_flow/self.revenue_from_operations
-        self.cashflow_asset_ratio = self.cash_flow/self.total_asset
-        self.cfo_asset_ratio = self.operating_cash_flow/self.total_asset
-        self.cashflow_equity_ratio = self.cash_flow/self.equity_capital
-        self.net_income_total_asset_ratio = self.net_profit/self.total_asset
-        self.interest_coverage_ratio = self.finance_cost/self.ebit
+        try:
+            self.gp_margin = self.gross_profit / self.revenue_from_operations
+            self.operating_profit_ratio = self.operating_income / self.revenue_from_operations
+            self.operating_exp_ratio = self.operating_income / self.revenue_from_operations
+            self.cash_flow_rate = self.operating_cash_flow / self.current_liability
+            self.debt_equity_ratio = self.long_term_debt / self.equity_capital
+            self.cash_flow_per_share = self.cash_flow / self.no_of_shares
+            self.revenue_per_share = self.revenue_from_operations / self.no_of_shares
+            self.operating_profit_per_share = self.operating_income / self.no_of_shares
+            self.pretax_income_per_share = self.pbt / self.no_of_shares
+            self.current_ratio = self.current_asset / self.current_liability
+            self.quick_ratio = (self.cash_cash_equivalents + self.marketable_securities +
+                                self.trade_receivables) / self.current_liability
+            self.interest_expense_ratio = self.finance_cost / (self.revenue_from_operations + self.other_income)
+            self.networth_asset_ratio = self.equity_capital / self.total_asset
+            self.long_term_fund_suitability = (self.long_term_debt + self.equity_capital) / (self.total_asset -
+                                                                                             self.current_asset)
+            self.contingent_liability_networth = self.contingent_liability / self.equity_capital
+            self.inventory_receivables_equity = (self.inventory + self.trade_receivables) / self.equity_capital
+            self.asset_turnover_ratio = self.revenue_from_operations / self.total_asset
+            self.trade_receivables_turnover = self.credit_sales / self.trade_receivables
+            self.avg_collection_days = self.trade_receivables_turnover / 365
+            self.inventory_turnover = self.cost_goods_sold / self.inventory
+            self.working_capital_total_asset_ratio = (self.current_asset - self.current_liability) / self.total_asset
+            self.quick_asset_total_asset_ratio = (self.cash_cash_equivalents + self.marketable_securities +
+                                                  self.trade_receivables) / self.total_asset
+            self.current_asset_total_asset_ratio = self.current_asset / self.total_asset
+            self.cash_asset_total_asset_ratio = self.cash_cash_equivalents / self.total_asset
+            self.cash_current_liability_ratio = self.cash_cash_equivalents / self.current_liability
+            self.inventory_working_capital_ratio = self.inventory / (self.current_asset + self.current_liability)
+            self.inventory_current_liability_ratio = self.inventory / self.current_liability
+            self.working_capital_equity_ratio = (self.current_asset + self.current_liability) / self.equity_capital
+            self.current_liability_equity_ratio = self.current_liability / self.equity_capital
+            self.retained_earnings_total_asset = self.retained_earnings / self.total_asset
+            self.total_income_exp_ratio = self.total_income / self.total_expense
+            self.total_exp_asset_ratio = self.total_expense / self.total_asset
+            self.current_asset_turnover = self.current_asset / self.revenue_from_operations
+            self.quick_asset_turnover = (self.cash_cash_equivalents + self.marketable_securities +
+                                         self.trade_receivables) / self.revenue_from_operations
+            self.working_capital_turnover = (self.current_asset - self.current_liability) / self.revenue_from_operations
+            self.cash_turnover = self.cash_cash_equivalents / self.revenue_from_operations
+            self.cashflow_sales_ratio = self.cash_flow / self.revenue_from_operations
+            self.cashflow_asset_ratio = self.cash_flow / self.total_asset
+            self.cfo_asset_ratio = self.operating_cash_flow / self.total_asset
+            self.cashflow_equity_ratio = self.cash_flow / self.equity_capital
+            self.net_income_total_asset_ratio = self.net_profit / self.total_asset
+            self.interest_coverage_ratio = self.finance_cost / self.ebit
 
+        except ZeroDivisionError:
+            pass
+            
     def prediction_model(self):
         self.columns = [' Operating Gross Margin', ' Operating Profit Rate',
                         ' Operating Expense Rate', ' Cash flow rate',
@@ -142,46 +149,62 @@ class FinancialData:
     def generate_report(self):
         if self.insolvency_prediction == 0:
             self.insolvency_report = f''' 
-                                            INSOLVENCY REPORT OF {self.company_name}
+                                           INSOLVENCY REPORT OF {self.company_name}
                                   
                                   
-             On the basis of the financial data of {self.company_name} for the year {self.year},
-             it has been predicted that the company will not become insolvent. The prediction has been made
-             on the basis of the machine learning model Random Forest Classifier.\n
+        On the basis of the financial data of {self.company_name} for the year {self.year},
+        it has been predicted that the company will not become insolvent. The prediction has been made
+        on the basis of the machine learning model Random Forest Classifier.
                 
-             Details of the machine Learning model:\n
-             For predicting whether the company will become insolvent or not Machine Learning model named 
-             Random Forest Classifier has been used. The model has been trained on 43 ratios of 6819
-             companies.
+        Details of the machine Learning model:
+        For predicting whether the company will become insolvent or not Machine Learning model named 
+        Random Forest Classifier has been used. The model has been trained on 43 ratios of 6819
+        companies.
                         
-             Source of data for training Machine Learning model: Kaggle
+        Source of data for training Machine Learning model: Kaggle
                         
-             Accuracy of Model: 0.97\n
-             True Positives: 1312\n
-             False Positives: 1\n
-             False Negative: 45\n
-             True Negative: 6\n
-             '''
+        Accuracy of Model: 0.97
+        True Positives: 1312
+        False Positives: 1
+        False Negative: 45
+        True Negative: 6
+        '''
 
         if self.insolvency_prediction == 1:
             self.insolvency_report = f''' 
                                             INSOLVENCY REPORT OF {self.company_name}
                                  
                                  
-            On the basis of the financial data of {self.company_name} for the year {self.year}, 
-            it has been predicted that the company will become insolvent. The prediction has been made 
-            on the basis of the machine learning model Random Forest Classifier.\n
+        On the basis of the financial data of {self.company_name} for the year {self.year}, 
+        it has been predicted that the company will become insolvent. The prediction has been made 
+        on the basis of the machine learning model Random Forest Classifier.
 
-            Details of the machine Learning model:\n
-            For predicting whether the company will become insolvent or not Machine Learning model named
-            Random Forest Classifier has been used. The model has been trained on 43 ratios of 6819
-            companies.\n
+        Details of the machine Learning model:
+        For predicting whether the company will become insolvent or not Machine Learning model named
+        Random Forest Classifier has been used. The model has been trained on 43 ratios of 6819
+        companies.
                         
-            Source of data for training Machine Learning model: Kaggle
+        Source of data for training Machine Learning model: Kaggle
                         
-            Accuracy of Model: 0.97\n
-            True Positives: 1312\n
-            False Positives: 1\n
-            False Negative: 45\n
-            True Negative: 6\n
-            '''
+        Accuracy of Model: 0.97
+        True Positives: 1312
+        False Positives: 1
+        False Negative: 45
+        True Negative: 6
+        '''
+
+
+class ReportGenerator:
+    def __init__(self, path, report_data, company):
+        self.path = path
+        self.report_data = report_data
+        self.pdf_report = None
+        self.company = company
+
+    def save(self):
+        self.pdf_report = FPDF()
+        self.pdf_report.add_page()
+        self.pdf_report.set_font('Arial', size=12)
+        self.pdf_report.set_margins(left=0.5, top=1, right=1)
+        self.pdf_report.multi_cell(0, 10, self.report_data)
+        self.pdf_report.output(os.path.join(self.path, 'Insolvency Prediction Report.pdf'))
