@@ -236,6 +236,7 @@ class Ui:
         self.report_text.insert(INSERT, self.company_data.insolvency_report)
         self.report_text.place(x=0, y=0)
         self.save_report_button['state'] = NORMAL
+        self.report_text['state'] = DISABLED
 
     def save_report(self):
         self.path = filedialog.askdirectory(title='Select Location')

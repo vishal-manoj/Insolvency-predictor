@@ -47,57 +47,100 @@ class FinancialData:
         self.pbt = self.revenue_from_operations - (self.cost_goods_sold + self.operating_expenses + self.finance_cost)
         self.ebit = self.total_income - (self.cost_goods_sold + self.operating_expenses)
 
-        try:
-            self.gp_margin = self.gross_profit / self.revenue_from_operations
-            self.operating_profit_ratio = self.operating_income / self.revenue_from_operations
-            self.operating_exp_ratio = self.operating_income / self.revenue_from_operations
-            self.cash_flow_rate = self.operating_cash_flow / self.current_liability
-            self.debt_equity_ratio = self.long_term_debt / self.equity_capital
-            self.cash_flow_per_share = self.cash_flow / self.no_of_shares
-            self.revenue_per_share = self.revenue_from_operations / self.no_of_shares
-            self.operating_profit_per_share = self.operating_income / self.no_of_shares
-            self.pretax_income_per_share = self.pbt / self.no_of_shares
-            self.current_ratio = self.current_asset / self.current_liability
-            self.quick_ratio = (self.cash_cash_equivalents + self.marketable_securities +
-                                self.trade_receivables) / self.current_liability
-            self.interest_expense_ratio = self.finance_cost / (self.revenue_from_operations + self.other_income)
-            self.networth_asset_ratio = self.equity_capital / self.total_asset
-            self.long_term_fund_suitability = (self.long_term_debt + self.equity_capital) / (self.total_asset -
-                                                                                             self.current_asset)
-            self.contingent_liability_networth = self.contingent_liability / self.equity_capital
-            self.inventory_receivables_equity = (self.inventory + self.trade_receivables) / self.equity_capital
-            self.asset_turnover_ratio = self.revenue_from_operations / self.total_asset
-            self.trade_receivables_turnover = self.credit_sales / self.trade_receivables
-            self.avg_collection_days = self.trade_receivables_turnover / 365
-            self.inventory_turnover = self.cost_goods_sold / self.inventory
-            self.working_capital_total_asset_ratio = (self.current_asset - self.current_liability) / self.total_asset
-            self.quick_asset_total_asset_ratio = (self.cash_cash_equivalents + self.marketable_securities +
-                                                  self.trade_receivables) / self.total_asset
-            self.current_asset_total_asset_ratio = self.current_asset / self.total_asset
-            self.cash_asset_total_asset_ratio = self.cash_cash_equivalents / self.total_asset
-            self.cash_current_liability_ratio = self.cash_cash_equivalents / self.current_liability
-            self.inventory_working_capital_ratio = self.inventory / (self.current_asset + self.current_liability)
-            self.inventory_current_liability_ratio = self.inventory / self.current_liability
-            self.working_capital_equity_ratio = (self.current_asset + self.current_liability) / self.equity_capital
-            self.current_liability_equity_ratio = self.current_liability / self.equity_capital
-            self.retained_earnings_total_asset = self.retained_earnings / self.total_asset
-            self.total_income_exp_ratio = self.total_income / self.total_expense
-            self.total_exp_asset_ratio = self.total_expense / self.total_asset
-            self.current_asset_turnover = self.current_asset / self.revenue_from_operations
-            self.quick_asset_turnover = (self.cash_cash_equivalents + self.marketable_securities +
-                                         self.trade_receivables) / self.revenue_from_operations
-            self.working_capital_turnover = (self.current_asset - self.current_liability) / self.revenue_from_operations
-            self.cash_turnover = self.cash_cash_equivalents / self.revenue_from_operations
-            self.cashflow_sales_ratio = self.cash_flow / self.revenue_from_operations
-            self.cashflow_asset_ratio = self.cash_flow / self.total_asset
-            self.cfo_asset_ratio = self.operating_cash_flow / self.total_asset
-            self.cashflow_equity_ratio = self.cash_flow / self.equity_capital
-            self.net_income_total_asset_ratio = self.net_profit / self.total_asset
-            self.interest_coverage_ratio = self.finance_cost / self.ebit
+        self.gp_margin = self.gross_profit / self.revenue_from_operations if self.revenue_from_operations != 0 else 0
 
-        except ZeroDivisionError:
-            pass
-            
+        self.operating_profit_ratio = self.operating_income / self.revenue_from_operations \
+            if self.revenue_from_operations != 0 else 0
+
+        self.operating_exp_ratio = self.operating_income / self.revenue_from_operations \
+            if self.revenue_from_operations != 0 else 0
+
+        self.cash_flow_rate = self.operating_cash_flow / self.current_liability if self.current_liability != 0 else 0
+        self.debt_equity_ratio = self.long_term_debt / self.equity_capital if self.equity_capital != 0 else 0
+        self.cash_flow_per_share = self.cash_flow / self.no_of_shares if self.no_of_shares != 0 else 0
+        self.revenue_per_share = self.revenue_from_operations / self.no_of_shares if self.no_of_shares != 0 else 0
+        self.operating_profit_per_share = self.operating_income / self.no_of_shares if self.no_of_shares != 0 else 0
+        self.pretax_income_per_share = self.pbt / self.no_of_shares if self.no_of_shares != 0 else 0
+        self.current_ratio = self.current_asset / self.current_liability if self.current_liability != 0 else 0
+
+        self.quick_ratio = (self.cash_cash_equivalents + self.marketable_securities +
+                            self.trade_receivables) / self.current_liability if self.current_liability != 0 else 0
+
+        self.interest_expense_ratio = self.finance_cost / (self.revenue_from_operations + self.other_income) \
+            if (self.revenue_from_operations + self.other_income) != 0 else 0
+
+        self.networth_asset_ratio = self.equity_capital / self.total_asset if self.total_asset != 0 else 0
+
+        self.long_term_fund_suitability = (self.long_term_debt + self.equity_capital) / (self.total_asset -
+                                                                                         self.current_asset) \
+            if (self.total_asset - self.current_liability) != 0 else 0
+
+        self.contingent_liability_networth = self.contingent_liability / self.equity_capital \
+            if self.equity_capital != 0 else 0
+
+        self.inventory_receivables_equity = (self.inventory + self.trade_receivables) / self.equity_capital \
+            if self.equity_capital != 0 else 0
+
+        self.asset_turnover_ratio = self.revenue_from_operations / self.total_asset if self.total_asset != 0 else 0
+
+        self.trade_receivables_turnover = self.credit_sales / self.trade_receivables \
+            if self.trade_receivables != 0 else 0
+
+        self.avg_collection_days = self.trade_receivables_turnover / 365
+        self.inventory_turnover = self.cost_goods_sold / self.inventory if self.inventory != 0 else 0
+
+        self.working_capital_total_asset_ratio = (self.current_asset - self.current_liability) / self.total_asset \
+            if self.total_asset != 0 else 0
+
+        self.quick_asset_total_asset_ratio = (self.cash_cash_equivalents + self.marketable_securities +
+                                              self.trade_receivables) / self.total_asset if self.total_asset != 0 else 0
+
+        self.current_asset_total_asset_ratio = self.current_asset / self.total_asset if self.total_asset != 0 else 0
+
+        self.cash_asset_total_asset_ratio = self.cash_cash_equivalents / self.total_asset \
+            if self.total_asset != 0 else 0
+
+        self.cash_current_liability_ratio = self.cash_cash_equivalents / self.current_liability \
+            if self.current_liability != 0 else 0
+
+        self.inventory_working_capital_ratio = self.inventory / (self.current_asset + self.current_liability) \
+            if (self.current_asset + self.current_liability) != 0 else 0
+
+        self.inventory_current_liability_ratio = self.inventory / self.current_liability \
+            if self.current_liability != 0 else 0
+
+        self.working_capital_equity_ratio = (self.current_asset + self.current_liability) / self.equity_capital \
+            if self.equity_capital != 0 else 0
+
+        self.current_liability_equity_ratio = self.current_liability / self.equity_capital \
+            if self.equity_capital != 0 else 0
+
+        self.retained_earnings_total_asset = self.retained_earnings / self.total_asset if self.total_asset != 0 else 0
+        self.total_income_exp_ratio = self.total_income / self.total_expense if self.total_expense != 0 else 0
+        self.total_exp_asset_ratio = self.total_expense / self.total_asset if self.total_asset != 0 else 0
+
+        self.current_asset_turnover = self.current_asset / self.revenue_from_operations \
+            if self.revenue_from_operations != 0 else 0
+
+        self.quick_asset_turnover = (self.cash_cash_equivalents + self.marketable_securities +
+                                     self.trade_receivables) / self.revenue_from_operations \
+            if self.revenue_from_operations != 0 else 0
+
+        self.working_capital_turnover = (self.current_asset - self.current_liability) / self.revenue_from_operations \
+            if self.revenue_from_operations != 0 else 0
+
+        self.cash_turnover = self.cash_cash_equivalents / self.revenue_from_operations  \
+            if self.revenue_from_operations != 0 else 0
+
+        self.cashflow_sales_ratio = self.cash_flow / self.revenue_from_operations  \
+            if self.revenue_from_operations != 0 else 0
+
+        self.cashflow_asset_ratio = self.cash_flow / self.total_asset if self.total_asset != 0 else 0
+        self.cfo_asset_ratio = self.operating_cash_flow / self.total_asset if self.total_asset != 0 else 0
+        self.cashflow_equity_ratio = self.cash_flow / self.equity_capital if self.equity_capital != 0 else 0
+        self.net_income_total_asset_ratio = self.net_profit / self.total_asset if self.total_asset != 0 else 0
+        self.interest_coverage_ratio = self.finance_cost / self.ebit if self.ebit != 0 else 0
+
     def prediction_model(self):
         self.columns = [' Operating Gross Margin', ' Operating Profit Rate',
                         ' Operating Expense Rate', ' Cash flow rate',
@@ -143,54 +186,144 @@ class FinancialData:
                             self.cashflow_equity_ratio, self.net_income_total_asset_ratio, self.interest_coverage_ratio,
                             self.net_income_flag]]
         self.data = pd.DataFrame(columns=self.columns, data=self.column_data)
-        self.model = joblib.load("C:\\Users\\DELL\\insolvency_prediction_model.pkl")
+        self.model = joblib.load('insolvency_prediction_model.pkl')
         self.insolvency_prediction = self.model.predict(self.data)
 
     def generate_report(self):
         if self.insolvency_prediction == 0:
             self.insolvency_report = f''' 
-                                           INSOLVENCY REPORT OF {self.company_name}
-                                  
-                                  
+            \t\t\t\t\t\t INSOLVENCY REPORT OF {self.company_name}
+        \n  
         On the basis of the financial data of {self.company_name} for the year {self.year},
         it has been predicted that the company will not become insolvent. The prediction has been made
         on the basis of the machine learning model Random Forest Classifier.
                 
         Details of the machine Learning model:
+        
         For predicting whether the company will become insolvent or not Machine Learning model named 
         Random Forest Classifier has been used. The model has been trained on 43 ratios of 6819
         companies.
                         
         Source of data for training Machine Learning model: Kaggle
                         
-        Accuracy of Model: 0.97
-        True Positives: 1312
-        False Positives: 1
-        False Negative: 45
-        True Negative: 6
+        Accuracy of Model:\t\t\t\t 0.97
+        True Positives:\t\t\t\t 1312
+        False Positives:\t\t\t\t 1
+        False Negative:\t\t\t\t 45
+        True Negative:\t\t\t\t 6
+        
+        Financial Ratios:
+        
+        Operating Gross Margin:\t\t\t\t\t\t\t\t{self.gp_margin}
+        Operating Profit Rate:\t\t\t\t\t\t\t\t{self.operating_profit_ratio}
+        Operating Expense Rate:\t\t\t\t\t\t\t\t{self.operating_exp_ratio} 
+        Cash flow rate:\t\t\t\t\t\t\t\t{self.cash_flow_rate}
+        Debt-Equity Ratio:\t\t\t\t\t\t\t\t{self.debt_equity_ratio}
+        Cash Flow Per Share:\t\t\t\t\t\t\t\t{self.cash_flow_per_share}
+        Revenue Per Share:\t\t\t\t\t\t\t\t{self.revenue_per_share}   
+        Operating Profit Per Share:\t\t\t\t\t\t\t\t{self.operating_profit_per_share}
+        Pre-tax Income Per Share:\t\t\t\t\t\t\t\t{self.pretax_income_per_share}
+        Current Ratio:\t\t\t\t\t\t\t\t{self.current_ratio}
+        Quick Ratio:\t\t\t\t\t\t\t\t{self.quick_ratio}
+        Interest Expense Ratio:\t\t\t\t\t\t\t\t{self.interest_expense_ratio}
+        Net worth/Assets:\t\t\t\t\t\t\t\t{self.networth_asset_ratio}
+        Long-term fund suitability ratio:\t\t\t\t\t\t\t\t{self.long_term_fund_suitability}
+        Contingent liabilities/Net worth:\t\t\t\t\t\t\t\t{self.contingent_liability}
+        Inventory and accounts receivable/Net value:\t\t\t\t\t\t\t\t{self.inventory_receivables_equity}
+        Total Asset Turnover:\t\t\t\t\t\t\t\t{self.asset_turnover_ratio}
+        Accounts Receivable Turnover:\t\t\t\t\t\t\t\t{self.trade_receivables_turnover}
+        Average Collection Days:\t\t\t\t\t\t\t\t{self.avg_collection_days}
+        Inventory Turnover Rate (times):\t\t\t\t\t\t\t\t{self.inventory_turnover}
+        Working Capital to Total Assets:\t\t\t\t\t\t\t\t{self.working_capital_total_asset_ratio}
+        Quick Assets/Total Assets:\t\t\t\t\t\t\t\t{self.quick_asset_total_asset_ratio}
+        Current Assets/Total Assets:\t\t\t\t\t\t\t\t{self.current_asset_total_asset_ratio} 
+        Cash/Total Assets:\t\t\t\t\t\t\t\t{self.cash_asset_total_asset_ratio}
+        Cash/Current Liability:\t\t\t\t\t\t\t\t{self.cash_current_liability_ratio}
+        Inventory/Working Capital:\t\t\t\t\t\t\t\t{self.inventory_working_capital_ratio}
+        Inventory/Current Liability:\t\t\t\t\t\t\t\t{self.inventory_current_liability_ratio}
+        Working Capital/Equity:\t\t\t\t\t\t\t\t{self.working_capital_equity_ratio}
+        Current Liabilities/Equity:\t\t\t\t\t\t\t\t{self.current_liability_equity_ratio}
+        Retained Earnings to Total Assets:\t\t\t\t\t\t\t\t{self.retained_earnings}
+        Total income/Total expense:\t\t\t\t\t\t\t\t{self.total_income_exp_ratio} 
+        Total expense/Assets:\t\t\t\t\t\t\t\t{self.total_exp_asset_ratio}
+        Current Asset Turnover Rate:\t\t\t\t\t\t\t\t{self.current_asset_turnover} 
+        Quick Asset Turnover Rate:\t\t\t\t\t\t\t\t{self.quick_asset_turnover}
+        Working capital Turnover Rate:\t\t\t\t\t\t\t\t{self.working_capital_turnover} 
+        Cash Turnover Rate:\t\t\t\t\t\t\t\t{self.cash_turnover}
+        Cash Flow to Sales:\t\t\t\t\t\t\t\t{self.cashflow_sales_ratio}
+        Cash Flow to Total Assets:\t\t\t\t\t\t\t\t{self.cashflow_asset_ratio}
+        CFO to Assets:\t\t\t\t\t\t\t\t{self.cfo_asset_ratio}
+        Cash Flow to Equity:\t\t\t\t\t\t\t\t{self.cashflow_equity_ratio}
+        Net Income to Total Assets:\t\t\t\t\t\t\t\t{self.net_income_total_asset_ratio}
+        Interest Coverage Ratio (Interest expense to EBIT):\t\t\t\t\t\t\t\t{self.interest_coverage_ratio}
         '''
 
         if self.insolvency_prediction == 1:
             self.insolvency_report = f''' 
-                                            INSOLVENCY REPORT OF {self.company_name}
-                                 
-                                 
+            \t\t\t\t\t\t INSOLVENCY REPORT OF {self.company_name}
+        \n
         On the basis of the financial data of {self.company_name} for the year {self.year}, 
         it has been predicted that the company will become insolvent. The prediction has been made 
         on the basis of the machine learning model Random Forest Classifier.
 
         Details of the machine Learning model:
+        
         For predicting whether the company will become insolvent or not Machine Learning model named
         Random Forest Classifier has been used. The model has been trained on 43 ratios of 6819
         companies.
                         
         Source of data for training Machine Learning model: Kaggle
                         
-        Accuracy of Model: 0.97
-        True Positives: 1312
-        False Positives: 1
-        False Negative: 45
-        True Negative: 6
+        Accuracy of Model:\t\t\t\t 0.97
+        True Positives:\t\t\t\t 1312
+        False Positives:\t\t\t\t 1
+        False Negative:\t\t\t\t 45
+        True Negative:\t\t\t\t 6
+        
+        Financial Ratios:
+        
+        Operating Gross Margin:\t\t\t\t\t\t\t\t{self.gp_margin}
+        Operating Profit Rate:\t\t\t\t\t\t\t\t{self.operating_profit_ratio}
+        Operating Expense Rate:\t\t\t\t\t\t\t\t{self.operating_exp_ratio} 
+        Cash flow rate:\t\t\t\t\t\t\t\t{self.cash_flow_rate}
+        Debt-Equity Ratio:\t\t\t\t\t\t\t\t{self.debt_equity_ratio}
+        Cash Flow Per Share:\t\t\t\t\t\t\t\t{self.cash_flow_per_share}
+        Revenue Per Share:\t\t\t\t\t\t\t\t{self.revenue_per_share}   
+        Operating Profit Per Share:\t\t\t\t\t\t\t\t{self.operating_profit_per_share}
+        Pre-tax Income Per Share:\t\t\t\t\t\t\t\t{self.pretax_income_per_share}
+        Current Ratio:\t\t\t\t\t\t\t\t{self.current_ratio}
+        Quick Ratio:\t\t\t\t\t\t\t\t{self.quick_ratio}
+        Interest Expense Ratio:\t\t\t\t\t\t\t\t{self.interest_expense_ratio}
+        Net worth/Assets:\t\t\t\t\t\t\t\t{self.networth_asset_ratio}
+        Long-term fund suitability ratio:\t\t\t\t\t\t\t\t{self.long_term_fund_suitability}
+        Contingent liabilities/Net worth:\t\t\t\t\t\t\t\t{self.contingent_liability}
+        Inventory and accounts receivable/Net value:\t\t\t\t\t\t\t\t{self.inventory_receivables_equity}
+        Total Asset Turnover:\t\t\t\t\t\t\t\t{self.asset_turnover_ratio}
+        Accounts Receivable Turnover:\t\t\t\t\t\t\t\t{self.trade_receivables_turnover}
+        Average Collection Days:\t\t\t\t\t\t\t\t{self.avg_collection_days}
+        Inventory Turnover Rate (times):\t\t\t\t\t\t\t\t{self.inventory_turnover}
+        Working Capital to Total Assets:\t\t\t\t\t\t\t\t{self.working_capital_total_asset_ratio}
+        Quick Assets/Total Assets:\t\t\t\t\t\t\t\t{self.quick_asset_total_asset_ratio}
+        Current Assets/Total Assets:\t\t\t\t\t\t\t\t{self.current_asset_total_asset_ratio} 
+        Cash/Total Assets:\t\t\t\t\t\t\t\t{self.cash_asset_total_asset_ratio}
+        Cash/Current Liability:\t\t\t\t\t\t\t\t{self.cash_current_liability_ratio}
+        Inventory/Working Capital:\t\t\t\t\t\t\t\t{self.inventory_working_capital_ratio}
+        Inventory/Current Liability:\t\t\t\t\t\t\t\t{self.inventory_current_liability_ratio}
+        Working Capital/Equity:\t\t\t\t\t\t\t\t{self.working_capital_equity_ratio}
+        Current Liabilities/Equity:\t\t\t\t\t\t\t\t{self.current_liability_equity_ratio}
+        Retained Earnings to Total Assets:\t\t\t\t\t\t\t\t{self.retained_earnings}
+        Total income/Total expense:\t\t\t\t\t\t\t\t{self.total_income_exp_ratio} 
+        Total expense/Assets:\t\t\t\t\t\t\t\t{self.total_exp_asset_ratio}
+        Current Asset Turnover Rate:\t\t\t\t\t\t\t\t{self.current_asset_turnover} 
+        Quick Asset Turnover Rate:\t\t\t\t\t\t\t\t{self.quick_asset_turnover}
+        Working capital Turnover Rate:\t\t\t\t\t\t\t\t{self.working_capital_turnover} 
+        Cash Turnover Rate:\t\t\t\t\t\t\t\t{self.cash_turnover}
+        Cash Flow to Sales:\t\t\t\t\t\t\t\t{self.cashflow_sales_ratio}
+        Cash Flow to Total Assets:\t\t\t\t\t\t\t\t{self.cashflow_asset_ratio}
+        CFO to Assets:\t\t\t\t\t\t\t\t{self.cfo_asset_ratio}
+        Cash Flow to Equity:\t\t\t\t\t\t\t\t{self.cashflow_equity_ratio}
+        Net Income to Total Assets:\t\t\t\t\t\t\t\t{self.net_income_total_asset_ratio}
+        Interest Coverage Ratio (Interest expense to EBIT):\t\t\t\t\t\t\t\t{self.interest_coverage_ratio}
         '''
 
 
