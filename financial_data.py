@@ -1,10 +1,10 @@
 import os.path
-
 import pandas as pd
 from fpdf import FPDF
 import joblib
 
 
+# Class for calculating ratios using input data, predict insolvency and display insolvency report.
 class FinancialData:
     def __init__(self, **kwargs):
         self.company_name = kwargs.get('name')
@@ -47,6 +47,8 @@ class FinancialData:
         self.pbt = self.revenue_from_operations - (self.cost_goods_sold + self.operating_expenses + self.finance_cost)
         self.ebit = self.total_income - (self.cost_goods_sold + self.operating_expenses)
 
+        # Ratios for predicting insolvency. For every formula an if statement is given so that if the denominator is
+        # zero, ZeroDivisionError is not raised and the ratio will be taken as 0
         self.gp_margin = self.gross_profit / self.revenue_from_operations if self.revenue_from_operations != 0 else 0
 
         self.operating_profit_ratio = self.operating_income / self.revenue_from_operations \
@@ -185,11 +187,13 @@ class FinancialData:
                             self.cashflow_sales_ratio, self.cashflow_asset_ratio, self.cfo_asset_ratio,
                             self.cashflow_equity_ratio, self.net_income_total_asset_ratio, self.interest_coverage_ratio,
                             self.net_income_flag]]
+        # Created a dataframe of calculated ratios and is input into the model for prediction.
         self.data = pd.DataFrame(columns=self.columns, data=self.column_data)
         self.model = joblib.load('insolvency_prediction_model.pkl')
         self.insolvency_prediction = self.model.predict(self.data)
 
     def generate_report(self):
+        # If company will not become insolvent, below report will be printed.
         if self.insolvency_prediction == 0:
             self.insolvency_report = f''' 
             \t\t\t\t\t\t INSOLVENCY REPORT OF {self.company_name}
@@ -258,6 +262,7 @@ class FinancialData:
         Interest Coverage Ratio (Interest expense to EBIT):\t\t\t\t\t\t\t\t{self.interest_coverage_ratio}
         '''
 
+        # If company will become insolvent, below report will be printed.
         if self.insolvency_prediction == 1:
             self.insolvency_report = f''' 
             \t\t\t\t\t\t INSOLVENCY REPORT OF {self.company_name}
@@ -327,6 +332,7 @@ class FinancialData:
         '''
 
 
+# Class for creating report in pdf and saving the same in a user specified location.
 class ReportGenerator:
     def __init__(self, path, report_data, company):
         self.path = path
@@ -340,4 +346,5 @@ class ReportGenerator:
         self.pdf_report.set_font('Arial', size=12)
         self.pdf_report.set_margins(left=0.5, top=1, right=1)
         self.pdf_report.multi_cell(0, 10, self.report_data)
-        self.pdf_report.output(os.path.join(self.path, 'Insolvency Prediction Report.pdf'))
+        self.pdf_report.output(os.path.join(self.path, f'Insolvency Prediction Report of {self.company}.pdf'))
+

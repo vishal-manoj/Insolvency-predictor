@@ -3,7 +3,7 @@ from financial_data import FinancialData, ReportGenerator
 from tkinter import filedialog
 
 
-class Ui:
+class Application:
     def __init__(self, root):
         self.company_name_label = None
         self.year_label = None
@@ -96,6 +96,8 @@ class Ui:
                                          state=DISABLED, command=self.save_report)
 
         self.clear_button = Button(self.button_frame, text='Clear Data', height=3, width=40, bg='#31f1f7')
+        # a list of buttons is created and is placed with a loop so that the position of all buttons can be controlled
+        # from a loop
         button_list = [self.data_button, self.report_button, self.save_report_button, self.clear_button]
         button_y = 2
         for button in button_list:
@@ -108,6 +110,7 @@ class Ui:
     def data_space(self):
         self.enter_data_label.destroy()
         size = ('Arial', 12)
+        # Labels for data entry boxes
         self.company_name_label = Label(self.data_entry_frame, text='Company Name:', font=size)
         self.year_label = Label(self.data_entry_frame, text='Year:', font=size)
         self.no_shares_label = Label(self.data_entry_frame, text='Number of shares:', font=size)
@@ -139,6 +142,7 @@ class Ui:
                                            text='Negative net income for last two consecutive years:',
                                            font=size)
 
+        # Entry boxes for entering data
         width = 50
         self.company_name_entry = Entry(self.data_entry_frame, width=width)
         self.year_entry = Entry(self.data_entry_frame, width=width)
@@ -190,6 +194,8 @@ class Ui:
                       self.inventory_entry, self.current_liability_entry, self.cash_equivalents_entry,
                       self.cash_flow_entry, self.operating_cashflow_entry]
 
+        # for loop is used to place labels and buttons. So, position of all labels and entry boxes can be controlled
+        # from a loop.
         label_y = 10
         for label in label_list:
             label.place(x=5, y=label_y)
@@ -200,6 +206,7 @@ class Ui:
             entry_y += 25
 
     def submit(self):
+        # Class FinancialData will be initialized with the values input in the entry boxes by the user.
         self.company_data = FinancialData(name=self.company_name_entry.get(), year=self.year_entry.get(),
                                           no_of_shares=int(self.no_shares_entry.get()), rfo=int(self.rfo_entry.get()),
                                           credit_sales=int(self.credit_sales_entry.get()), oi=int(self.oi_entry.get()),
@@ -245,9 +252,6 @@ class Ui:
         self.pdf_report.save()
 
 
-obj = Tk()
-master = Ui(obj)
-obj.mainloop()
 
 
 
