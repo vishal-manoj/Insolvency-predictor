@@ -1,5 +1,5 @@
 # Insolvency-predictor
-A GUI based insolvency prediction software, where the user can input financial data of a company and the software will predict whether the company will become insolvent in the future.  
+A GUI based insolvency prediction software, where the user can input financial data of a company and the software will predict whether the company will become insolvent in the future or not.  
 Machine Learning model RandomForest Classifier has been used to create the model for predicting whether the company will become insolvent or not.  
 The model has been trained using the data taken from Kaggle. <br>
 ### **Details of RandomForest Classifier:** <br>
