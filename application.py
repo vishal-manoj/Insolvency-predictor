@@ -65,6 +65,10 @@ class Application:
         self.report_text = None
         self.path = None
         self.pdf_report = None
+        self.data_entry_frame = None
+        self.report_frame = None
+        self.submit_button_frame = None
+        self.submit_button = None
 
         self.root = root
         self.root.title('Insolvency Predictor')
@@ -77,17 +81,6 @@ class Application:
                                    highlightthickness=4)
         self.display_frame.place(x=300, y=50)
 
-        self.data_entry_frame = Frame(self.display_frame, height=740, width=1230, highlightbackground='#31f1f7',
-                                      highlightthickness=4)
-        self.data_entry_frame.place(x=0, y=0)
-
-        self.submit_button_frame = Frame(self.display_frame, height=70, width=1230, highlightbackground='#31f1f7',
-                                         highlightthickness=4)
-
-        self.submit_button_frame.place(x=0, y=665)
-        self.submit_button = Button(self.submit_button_frame, text='Submit Data', height=3, width=30, bg='#31f1f7',
-                                    command=self.submit)
-        self.submit_button.place(x=500, y=3)
         self.data_button = Button(self.button_frame, text='Enter Data', height=3, width=40, bg='#31f1f7',
                                   command=self.data_space)
         self.report_button = Button(self.button_frame, text='Show Insolvency Report', height=3, width=40, bg='#31f1f7',
@@ -95,7 +88,8 @@ class Application:
         self.save_report_button = Button(self.button_frame, text='Save Report', height=3, width=40, bg='#31f1f7',
                                          state=DISABLED, command=self.save_report)
 
-        self.clear_button = Button(self.button_frame, text='Clear Data', height=3, width=40, bg='#31f1f7')
+        self.clear_button = Button(self.button_frame, text='Clear Data', height=3, width=40, bg='#31f1f7',
+                                   command=self.clear_data)
         # a list of buttons is created and is placed with a loop so that the position of all buttons can be controlled
         # from a loop
         button_list = [self.data_button, self.report_button, self.save_report_button, self.clear_button]
@@ -109,6 +103,17 @@ class Application:
 
     def data_space(self):
         self.enter_data_label.destroy()
+        self.data_entry_frame = Frame(self.display_frame, height=740, width=1230, highlightbackground='#31f1f7',
+                                      highlightthickness=4)
+        self.data_entry_frame.place(x=0, y=0)
+        self.submit_button_frame = Frame(self.data_entry_frame, height=70, width=1230, highlightbackground='#31f1f7',
+                                         highlightthickness=4)
+
+        self.submit_button_frame.place(x=0, y=665)
+        self.submit_button = Button(self.submit_button_frame, text='Submit Data', height=3, width=30, bg='#31f1f7',
+                                    command=self.submit)
+        self.submit_button.place(x=500, y=3)
+
         size = ('Arial', 12)
         # Labels for data entry boxes
         self.company_name_label = Label(self.data_entry_frame, text='Company Name:', font=size)
@@ -228,18 +233,20 @@ class Application:
                                           cf=int(self.cash_flow_entry.get()),
                                           ocf=int(self.operating_cashflow_entry.get()),
                                           net_income_flag=int(self.selected_option.get()))
-        for widget in self.display_frame.winfo_children():
+        for widget in self.data_entry_frame.winfo_children():
             widget.destroy()
         self.submit_label = Label(self.display_frame, text='Data  Successfully Submitted', font=('Arial', 18))
         self.submit_label.place(x=400, y=250)
 
     def show_insolvency_report(self):
-        for widget in self.display_frame.winfo_children():
-            widget.destroy()
+        self.submit_label.destroy()
+        self.report_frame = Frame(self.display_frame, height=740, width=1230, highlightbackground='#31f1f7',
+                                  highlightthickness=4)
+        self.report_frame.place(x=0, y=0)
         self.company_data.prediction_model()
         self.company_data.generate_report()
         self.report = self.company_data.insolvency_report
-        self.report_text = Text(self.display_frame, font=('Arial', 12), height=40, width=136)
+        self.report_text = Text(self.report_frame, font=('Arial', 12), height=40, width=136)
         self.report_text.insert(INSERT, self.company_data.insolvency_report)
         self.report_text.place(x=0, y=0)
         self.save_report_button['state'] = NORMAL
@@ -250,6 +257,14 @@ class Application:
         self.pdf_report = ReportGenerator(path=self.path, report_data=self.company_data.insolvency_report,
                                           company=self.company_data.company_name)
         self.pdf_report.save()
+
+    def clear_data(self):
+        for widget in self.report_frame.winfo_children():
+            widget.destroy()
+        self.enter_data_label = Label(self.display_frame, text='Click On Enter Data Button to Enter Financial Data',
+                                      font=('Arial', 16))
+        self.enter_data_label.place(x=400, y=250)
+        self.save_report_button['state'] = DISABLED
 
 
 

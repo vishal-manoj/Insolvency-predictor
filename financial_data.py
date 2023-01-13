@@ -332,7 +332,7 @@ class FinancialData:
         '''
 
 
-# Class for creating report in pdf and saving the same in a user specified location.
+ # Class for creating report in pdf and saving the same in a user specified location.
 class ReportGenerator:
     def __init__(self, path, report_data, company):
         self.path = path
